@@ -66,14 +66,15 @@ bot.on("message", function(message) {
 
     switch(args[0].toLowerCase()) {
     case "cmds":
-       var embed = new Discord.RichEmbed()
-       .addField("cmds", "Show the commands", true)
-       .addField("ping", "I will be rude", true)
+       var cmds = new Discord.RichEmbed()
+       .addField("cmds", "Show the commands")
+       .addField("ping", "I will be rude")
        .addField("noticeme", "You will get noticed")
+       .addField("info", "Info!")
+       .addField("8ball", "Talk with me atleast a bit...")
        .setColor(0xDC143C)
-       .setFooter("commands plz")
-       .setThumbnail(message.author.avatarURL)
-        message.channel.sendEmbed(embed);
+       .setThumbnail()
+        message.channel.sendEmbed(cmds);
         break;
     case "removerole":
         message.member.removeRole(message.member.guild.roles.find("name", "dank member"));
@@ -128,7 +129,7 @@ bot.on("message", function(message) {
         else message.channel.sendMessage("I can't read that");
         break;
     default:
-        message.channel.sendMessage("Invalid command, say ***>cmds*** for commands.");
+        message.channel.sendMessage("Invalid command, say **>cmds** for commands.");
     }
 
 });
