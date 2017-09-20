@@ -102,7 +102,7 @@ bot.on("message", function(message) {
 
         if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection) {
             play(connection, message)
-        });
+        })
         break;
     case "skip":
         var server = servers[message.guild.id];
