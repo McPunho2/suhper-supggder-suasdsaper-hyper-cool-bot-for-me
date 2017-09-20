@@ -65,13 +65,13 @@ bot.on("message", function(message) {
     var args = message.content.substring(PREFIX.length).split(" ");
 
     switch(args[0].toLowerCase()) {
-    case "embed":
+    case "cmds":
        var embed = new Discord.RichEmbed()
-       .addField("Awesome Tile", "Yee Description", true)
-       .addField("Awesome Tile", "Yee D2scription", true)
-       .addField("Awesome Tile", "Yee D3scription")
+       .addField("cmds", "Show the commands", true)
+       .addField("ping", "I will be rude", true)
+       .addField("noticeme", "You will get noticed")
        .setColor(0xDC143C)
-       .setFooter("This message is pretty cool, oooh did i say message? I mean EMBEDD")
+       .setFooter("commands plz")
        .setThumbnail(message.author.avatarURL)
         message.channel.sendEmbed(embed);
         break;
