@@ -83,13 +83,24 @@ bot.on("message", function (message) {
             message.member.removeRole(message.member.guild.roles.find("name", "dank member"));
             break;
         case "kick":
-            var moron= message.mentions.members.first();
-            moron.kick().then((member) => {
-                    message.channel.send(":wave: " + moron.displayName + " has been sucessfully kicked :point_right:");
-            }).catch(() => {
-                message.channel.send("Acess Denied");
-            });
+            let adminRole = message.guild.roles.find("name", "Admin", "Adminstrator");
+            if(message.member.roles.has(adminRole)) {
+                let kickMember = message.guild.member(message.mentions.users.first());
+                message.guild.member(kickMember).kick();
+                messasge.channel.sendMessage("Member kicked.");
+            }else {
+                return message.reply("You don't have perms to kick u fucking scrub u deserves to die.");
+            }
             break;
+        case "ban":
+        let adminRole = message.guild.roles.find("name", "Admin", "Adminstrator");
+        if(message.member.roles.has(adminRole)) {
+            let banMember = message.guild.member(message.mentions.users.first());
+            message.guild.member(banMember).ban();
+            message.channel.sendMessage("Member banned.");
+        } else {
+            return message.reply("You dont have the perms to ban members. scrub.");
+        }
         case "deleterole":
             message.member.guild.roles.find("name", "dank member").delete();
             break;
