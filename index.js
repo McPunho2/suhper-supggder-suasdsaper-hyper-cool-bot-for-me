@@ -7,6 +7,19 @@ function generateHex() {
     return "#" + Math.floor(Math.random() * 16777215).toString(16);
 }
 
+function play(connection, message) {
+    var server = servers[message.guild.id];
+
+    server.dispatcher = connection.playStream(YTDL(server.queue[0], { filter: audioonly }));
+
+    server.queue.shift();
+
+    server.dispatcher.on("end", function () {
+        if (server.queue[0]) play(connection, message)
+        else connection.disconnect();
+    });
+}
+
 var fortunes = [
     "Yes",
     "No",
@@ -34,18 +47,8 @@ bot.on("ready", function () {
 });
 
 bot.on("guildMemberAdd", function (member) {
-    member.guild.channels.find("name", "scripts_nudes_everything").sendMessage(member.toString() + " Welcome!")
+    member.guild.defaultChannel.send("Welcome to " + member.guild.name + " " + member.toString())
 
-    member.addRole(member.guild.roles.find("name", "dank member"));
-
-    member.guild.createRole({
-        name: member.user.username,
-        color: generateHex(),
-        permissions: []
-    }).then(function (role) {
-        member.addRole(role);
-    })
-});
 
 bot.on("message", function (message) {
     if (message.author.equals(bot.user)) return;
@@ -59,8 +62,8 @@ bot.on("message", function (message) {
     switch (args[0].toLowerCase()) {
         case "cmds":
         message.reply("I have sent you cmds in dms");
-		message.author.send("Cmd List: ", ">ping - I will be rude", ">noticeme - You will be noticed", ">info - Info about me",         ">8ball (message) - I will answer!",         ">kick @user - I will kick this user",         ">ban @user - I will ban this user");
-        
+		message.author.send("Cmd List: ",
+        ">ping - I will be rude", ">noticeme - You will be noticed", ">info - Info about me",         ">8ball (message) - I will answer!",         ">kick @user - I will kick this user",         ">ban @user - I will ban this user");
         break;
         case "kick":
             moron.kick().then((member) => {
