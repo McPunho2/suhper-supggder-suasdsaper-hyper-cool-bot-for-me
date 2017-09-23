@@ -93,7 +93,6 @@ bot.on("message", function (message) {
             }
             break;
         case "ban":
-        let adminRole = message.guild.roles.find("name", "Admin", "Adminstrator");
         if(message.member.roles.has(adminRole)) {
             let banMember = message.guild.member(message.mentions.users.first());
             message.guild.member(banMember).ban();
