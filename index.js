@@ -141,8 +141,7 @@ bot.on("message", function (message) {
           if(!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection){ //joins the vc
             play(connection, message); 
           });
-        }
-        break;
+          break;
         case "deleterole":
             message.member.guild.roles.find("name", "dank member").delete();
             break;
