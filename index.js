@@ -82,6 +82,14 @@ bot.on("message", function (message) {
         case "removerole":
             message.member.removeRole(message.member.guild.roles.find("name", "dank member"));
             break;
+        case "kick":
+            var moron= message.mentions.members.first();
+            moron.kick().then((member) => {
+                    message.channel.send(":wave:" + moron.displayName + " has been sucessfully kicked :point_right");
+            }).catch(() => {
+                message.channel.send.("Acess Denied");
+            })
+            break;
         case "deleterole":
             message.member.guild.roles.find("name", "dank member").delete();
             break;
