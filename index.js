@@ -1,31 +1,5 @@
 const Discord = require("discord.js");
 const YTDL = require("ytdl-core");
-const opus = require('node-opus');
-const search = require('youtube-search');
-
-function play(connection, message){
-    var server = servers[message.guild.id];
-    server.dispatcher = connection.playStream(YTDL(server.queue[0], {filter: "audioonly"}));
-    server.queue.shift();
-    server.dispatcher.on("end", function(){
-      if(server.queue[0]) play(connection, message);
-      else connection.disconnect();
-      message.channel.send("Song Finished...")
-    });
-  }
-  function searchfunc(message){
-    var server = servers[message.guild.id];
-    let opts = {
-      key: "AIzaSyCeFwwxcMUvRlj8gR8rcX6g44X5NLYBIrg",
-    }
-    let args = message.content.slice(6)
-    let name = args
-    console.log(name)
-    search(name, opts, (err, results) => {
-        if(err) return console.log(err);
-        server.queue.push(results[0].link);
-      })
-  };
 
 const PREFIX = ">"
 
@@ -124,26 +98,41 @@ bot.on("message", function (message) {
                 message.channel.send("Acess denied sori.");
             });
             break;
-        case "play":
-        if(!args[0]) return message.channel.send("Please send a link/name..."); //Makes sure that theres a name/link
-        if(!message.member.voiceChannel) return message.reply("Please join a voice channel first!"); //Makes sure it can join a voice chat with that person
-        if(!servers[message.guild.id]) servers[message.guild.id] ={ //makes sure that there is a queue value for that server
-            queue: []
-          }
-          var server = servers[message.guild.id]
-          if(args[0].startsWith("http")){ //checks if its a link or not
-            message.reply("Adding "+args[0]);
-            server.queue.push(args[0]);
-          } else{ //searches for it with the api if a name
-            message.reply("Adding "+(message.content.slice(6)));
-            searchfunc(message)
-          }
-          if(!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection){ //joins the vc
-            play(connection, message); 
-          });
-          break;
         case "deleterole":
             message.member.guild.roles.find("name", "dank member").delete();
+            break;
+        case "die":
+            if (!args[1]) {
+                message.channel.sendMessage("Please provide a link.")
+                return;
+            }
+
+            if (!message.member.voiceChannel) {
+                message.channel.sendMessage("You must be in a voice channel.")
+                return;
+            }
+
+            if (!server[message.guild.id]) server[message.guild.id] = {
+               queue: {} 
+            };
+
+            var server = server[message.guild.id];
+
+            server.queue.push(args[1]);
+
+            if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(function (connection) {
+                play(connection, message)
+            })
+            break;
+        case "skip":
+            var server = servers[message.guild.id];
+
+            if (server.dispatcher) server.dispatcher.end();
+            break;
+        case "stop":
+            var server = servers[message.guild.id];
+
+            if (message.guild.voiceConnection) message.guild.voiceConnection.disconnect();
             break;
         case "noticeme":
             message.channel.sendMessage(message.author.toString() + " You were noticed by the god of memes, now get the fuck out.")
