@@ -7,19 +7,6 @@ function generateHex() {
     return "#" + Math.floor(Math.random() * 16777215).toString(16);
 }
 
-function play(connection, message) {
-    var server = servers[message.guild.id];
-
-    server.dispatcher = connection.playStream(YTDL(server.queue[0], { filter: audioonly }));
-
-    server.queue.shift();
-
-    server.dispatcher.on("end", function () {
-        if (server.queue[0]) play(connection, message)
-        else connection.disconnect();
-    });
-}
-
 var fortunes = [
     "Yes",
     "No",
@@ -72,8 +59,8 @@ bot.on("message", function (message) {
     switch (args[0].toLowerCase()) {
         case "cmds":
         message.reply("I have sent you cmds in dms");
-		message.author.send("Cmd List: ",
-        ">ping - I will be rude", ">noticeme - You will be noticed", ">info - Info about me",         ">8ball (message) - I will answer!",         ">kick @user - I will kick this user",         ">ban @user - I will ban this user");
+		message.author.send("Cmd List: ", ">ping - I will be rude", ">noticeme - You will be noticed", ">info - Info about me",         ">8ball (message) - I will answer!",         ">kick @user - I will kick this user",         ">ban @user - I will ban this user");
+        
         break;
         case "kick":
             moron.kick().then((member) => {
