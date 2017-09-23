@@ -89,16 +89,6 @@ bot.on("message", function (message) {
         case "info":
             message.channel.sendMessage("I am a meme bot, created for fun by McPunho2 (Kyuubi#1669).");
             break;
-        case "purge":
-        messagesDeleted = messages.array().length;
-        message.channel.fetchMessages({limit: messagesDeleted}).then(messages => message.channel.bulkDelete(messages));
-          message.channel.sendMessage("Deletion of messages successful. Total messages deleted: "+messagesDeleted);
-          console.log('Deletion of messages successful. Total messages deleted: '+messagesDeleted)
-        .catch(err => {
-            console.log('Error while doing Bulk Delete');
-            console.log(err);
-          });
-            break;
         case "8ball":
             if (args[1]) message.channel.sendMessage(fortunes[Math.floor(Math.random() * fortunes.length)]);
             else message.channel.sendMessage("I can't read that");
