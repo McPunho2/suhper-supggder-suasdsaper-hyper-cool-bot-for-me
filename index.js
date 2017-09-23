@@ -60,10 +60,6 @@ bot.on("message", function (message) {
     var moron= message.mentions.members.first();
 
     switch (args[0].toLowerCase()) {
-        case "cmds":
-        message.reply("I have sent you cmds in dms");
-		message.author.send(">ping - I will be rude", ">noticeme - You will be noticed", ">info - Info about me",         ">8ball (message) - I will answer!",         ">kick @user - I will kick this user",         ">ban @user - I will ban this user");
-        break;
         case "kick":
             moron.kick().then((member) => {
                     message.channel.send(":wave: " + moron.displayName + " has been sucessfully kicked :point_right:");
