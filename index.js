@@ -20,8 +20,6 @@ function play(connection, message) {
     });
 }
 
-var moron= message.mentions.members.first();
-
 var fortunes = [
     "Yes",
     "No",
@@ -68,6 +66,8 @@ bot.on("message", function (message) {
     if (!message.content.startsWith(PREFIX)) return;
 
     var args = message.content.substring(PREFIX.length).split(" ");
+
+    var moron= message.mentions.members.first();
 
     switch (args[0].toLowerCase()) {
         case "cmds":
