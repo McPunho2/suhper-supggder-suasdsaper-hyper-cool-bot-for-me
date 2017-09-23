@@ -91,7 +91,7 @@ bot.on("message", function (message) {
             break;
         case "purge":
         message.channel.fetchMessages({limit: messagesDeleted}).then(messages => message.channel.bulkDelete(messages));
-          messagesDeleted = messages.array().length;
+          messagesDeleted = parseInt(2);
           message.channel.sendMessage("Deletion of messages successful. Total messages deleted: "+messagesDeleted);
           console.log('Deletion of messages successful. Total messages deleted: '+messagesDeleted)
         .catch(err => {
