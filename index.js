@@ -83,7 +83,7 @@ bot.on("message", function (message) {
             message.member.removeRole(message.member.guild.roles.find("name", "dank member"));
             break;
         case "kick":
-            let adminRole = message.guild.roles.find("name", "Admin", "Adminstrator");
+            let adminRole = message.guild.roles.find("name", "Admin");
             if(message.member.roles.has(adminRole)) {
                 let kickMember = message.guild.member(message.mentions.users.first());
                 message.guild.member(kickMember).kick();
