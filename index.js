@@ -20,6 +20,8 @@ function play(connection, message) {
     });
 }
 
+var moron= message.mentions.members.first();
+
 var fortunes = [
     "Yes",
     "No",
@@ -83,23 +85,18 @@ bot.on("message", function (message) {
             message.member.removeRole(message.member.guild.roles.find("name", "dank member"));
             break;
         case "kick":
-            let adminRole = message.guild.roles.find("name", "Admin");
-            if(message.member.roles.has(adminRole)) {
-                let kickMember = message.guild.member(message.mentions.users.first());
-                message.guild.member(kickMember).kick();
-                messasge.channel.sendMessage("Member kicked.");
-            }else {
-                return message.reply("You don't have perms to kick u fucking scrub u deserves to die.");
-            }
+            moron.kick().then((member) => {
+                    message.channel.send(":wave: " + moron.displayName + " has been sucessfully kicked :point_right:");
+            }).catch(() => {
+                message.channel.send("Acess Denied");
+            });
             break;
         case "ban":
-        if(message.member.roles.has(adminRole)) {
-            let banMember = message.guild.member(message.mentions.users.first());
-            message.guild.member(banMember).ban();
-            message.channel.sendMessage("Member banned.");
-        } else {
-            return message.reply("You dont have the perms to ban members. scrub.");
-        }
+            moron.ban().then((member) => {
+                message.channel.send(moron.displayName + " is an idiot and was banned by " + message.author.toString());
+            }).catch(() => {
+                message.channel.send("Acess denied sori.");
+            });
         case "deleterole":
             message.member.guild.roles.find("name", "dank member").delete();
             break;
