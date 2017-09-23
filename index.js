@@ -87,8 +87,8 @@ bot.on("message", function (message) {
             moron.kick().then((member) => {
                     message.channel.send(":wave:" + moron.displayName + " has been sucessfully kicked :point_right");
             }).catch(() => {
-                message.channel.send("Acess Denied")
-            })
+                message.channel.send("Acess Denied");
+            });
             break;
         case "deleterole":
             message.member.guild.roles.find("name", "dank member").delete();
