@@ -71,19 +71,15 @@ bot.on("message", function (message) {
 
     switch (args[0].toLowerCase()) {
         case "cmds":
-            var cmds = new Discord.RichEmbed()
-                .addField("cmds", "Show the commands")
-                .addField("ping", "I will be rude")
-                .addField("noticeme", "You will get noticed")
-                .addField("info", "Info!")
-                .addField("8ball", "Talk with me atleast a bit...")
-                .setColor(0xDC143C)
-                .setThumbnail()
-            message.channel.sendEmbed(cmds);
-            break;
-        case "removerole":
-            message.member.removeRole(message.member.guild.roles.find("name", "dank member"));
-            break;
+        message.reply("I have sent you cmds in dms");
+		message.author.send("Cmd List: ",
+        ">ping - I will be rude",
+        ">noticeme - You will be noticed",
+        ">info - Info about me",
+        ">8ball (message) - I will answer!",
+        ">kick @user - I will kick this user",
+        ">ban @user - I will ban this user");
+        break;
         case "kick":
             moron.kick().then((member) => {
                     message.channel.send(":wave: " + moron.displayName + " has been sucessfully kicked :point_right:");
@@ -97,42 +93,6 @@ bot.on("message", function (message) {
             }).catch(() => {
                 message.channel.send("Acess denied sori.");
             });
-            break;
-        case "deleterole":
-            message.member.guild.roles.find("name", "dank member").delete();
-            break;
-        case "die":
-            if (!args[1]) {
-                message.channel.sendMessage("Please provide a link.")
-                return;
-            }
-
-            if (!message.member.voiceChannel) {
-                message.channel.sendMessage("You must be in a voice channel.")
-                return;
-            }
-
-            if (!server[message.guild.id]) server[message.guild.id] = {
-               queue: {} 
-            };
-
-            var server = server[message.guild.id];
-
-            server.queue.push(args[1]);
-
-            if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(function (connection) {
-                play(connection, message)
-            })
-            break;
-        case "skip":
-            var server = servers[message.guild.id];
-
-            if (server.dispatcher) server.dispatcher.end();
-            break;
-        case "stop":
-            var server = servers[message.guild.id];
-
-            if (message.guild.voiceConnection) message.guild.voiceConnection.disconnect();
             break;
         case "noticeme":
             message.channel.sendMessage(message.author.toString() + " You were noticed by the god of memes, now get the fuck out.")
