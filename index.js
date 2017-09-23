@@ -90,7 +90,7 @@ bot.on("message", function (message) {
             message.channel.sendMessage("I am a meme bot, created for fun by McPunho2 (Kyuubi#1669).");
             break;
         case "purge":
-        let messagecount = parseInt(numberofmessages);
+        let messagecount = parseInt(100);
         message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
             break;
         case "8ball":
