@@ -44,6 +44,7 @@ var servers = {};
 
 bot.on("ready", function () {
     console.log("Ready");
+    bot.user.setGame("Playing woah")
 });
 
 bot.on("guildMemberAdd", function (member) {
@@ -67,6 +68,11 @@ bot.on("message", function (message) {
                 message.channel.send("Acess Denied");
             });
             break;
+        case "say":
+        const sayMessage = args.join(" ");
+        message.delete().catch(O_o=>{}); 
+        message.channel.send(sayMessage);
+        break;
         case "ban":
             moron.ban().then((member) => {
                 message.channel.send(moron.displayName + " is an idiot and was banned by " + message.author.toString());
