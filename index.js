@@ -89,6 +89,22 @@ bot.on("message", function (message) {
         case "info":
             message.channel.sendMessage("I am a meme bot, created for fun by McPunho2 (Kyuubi#1669).");
             break;
+        case "purge":
+        let count = parseInt(args[0]) || 1;
+        
+          message.delete();
+        
+                    const messages = await message.channel.fetchMessages({ limit: Math.min(count, 100), before: message.id });
+                    const deletable = messages.filter(message => filter(message, bot));
+        
+                    await Promise.all(
+                        deletable.map(m => m.delete())
+                    );
+        
+                    const deleted = deletable.size;
+        
+                    (await message.channel.send(`:white_check_mark: ${viewName} \`${deletable.size}\` message${deleted === 1 ? '' : 's'}.`)).delete(2000);
+            break;
         case "8ball":
             if (args[1]) message.channel.sendMessage(fortunes[Math.floor(Math.random() * fortunes.length)]);
             else message.channel.sendMessage("I can't read that");
