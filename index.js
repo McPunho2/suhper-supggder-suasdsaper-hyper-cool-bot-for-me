@@ -73,12 +73,7 @@ bot.on("message", function (message) {
         case "cmds":
         message.reply("I have sent you cmds in dms");
 		message.author.send("Cmd List: ",
-        ">ping - I will be rude",
-        ">noticeme - You will be noticed",
-        ">info - Info about me",
-        ">8ball (message) - I will answer!",
-        ">kick @user - I will kick this user",
-        ">ban @user - I will ban this user");
+        ">ping - I will be rude", ">noticeme - You will be noticed", ">info - Info about me",         ">8ball (message) - I will answer!",         ">kick @user - I will kick this user",         ">ban @user - I will ban this user");
         break;
         case "kick":
             moron.kick().then((member) => {
