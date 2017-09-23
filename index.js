@@ -97,6 +97,7 @@ bot.on("message", function (message) {
             }).catch(() => {
                 message.channel.send("Acess denied sori.");
             });
+            break;
         case "deleterole":
             message.member.guild.roles.find("name", "dank member").delete();
             break;
