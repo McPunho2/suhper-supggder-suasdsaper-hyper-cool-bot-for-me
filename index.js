@@ -56,26 +56,17 @@ bot.on("message", function (message) {
 
     if (!message.content.startsWith(PREFIX)) return;
 
-    var args = message.content.substring(PREFIX.length).split(" ");
+    const args = message.content.slice(PREFIX.length).trim().split(/ +/g);
+
+    var moron= message.mentions.members.first();
 
     switch (args[0].toLowerCase()) {
         case "kick":
-            if(!message.member.roles.some(r=>["Administrator", "Moderator", "Admin"].includes(r.name)) )
-                return message.reply("Fock yu! U dun have permison!");
-                //meingotch\\
-                let member = message.mentions.members.first();
-                if(!member)
-                    return message.reply("Please mention a valid member of this server");
-                if(!member.kickable)
-                    return message.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
-                let reason = args.slice(1).join(' ');
-                
-                if(!reason)
-                    return message.reply("Please indicate a reason for the kick!");
-                //wiagfuckyou\\
-                await member.kick(reason)
-                    .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
-                message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`);
+            moron.kick().then((member) => {
+                    message.channel.send(moron.displayName + "is and guy that was kicked by " + message.author.toString());
+            }).catch(() => {
+                message.channel.send("Ou nooo i can't do anythingo");
+            });
             break;
         case "say":
         const sayMessage = args.join(" ");
@@ -83,38 +74,15 @@ bot.on("message", function (message) {
         message.channel.send(sayMessage);
         break;
         case "ban":
-        if(!message.member.roles.some(r=>["Administrator", "Admin"].includes(r.name)) )
-            return message.reply("Sorry, you don't have permissions to use this!");
-         break;
-
-         let member = message.mentions.members.first();
-
-         if(!member)
-            return message.reply("Please mention a valid member of this server");
-         if(!member.bannable) 
-            return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
-        
-            let reason = args.slice(1).join(' ');
-            if(!reason)
-              return message.reply("Please indicate a reason for the ban!");
-            await member.ban(reason)
-              .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
-            message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
+            moron.ban().then((member) => {
+                message.channel.send(moron.displayName + " is an idiot and was banned by " + message.author.toString());
+            }).catch(() => {
+                message.channel.send("Acess denied sori.");
+            });
+            break;
         case "noticeme":
             message.channel.sendMessage(message.author.toString() + " You were noticed by the god of memes, now get the fuck out.")
             break;
-        case "purge":
-        const deleteCount = parseInt(args[0], 10);
-        
-        // Ooooh nice, combined conditions. <3
-        if(!deleteCount || deleteCount < 2 || deleteCount > 100)
-          return message.reply("Please provide a number between 2 and 100 for the number of messages to delete");
-        
-        // So we get our messages, and delete them. Simple enough, right?
-        const fetched = await message.channel.fetchMessages({count: deleteCount});
-        message.channel.bulkDelete(fetched)
-          .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
-        break;
         case "ping":
             message.channel.sendMessage("Fuck you, i am not saying pong");
             break;
