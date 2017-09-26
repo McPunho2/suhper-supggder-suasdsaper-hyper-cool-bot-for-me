@@ -85,7 +85,7 @@ bot.on("message", function (message) {
             break;
         case "ping":
             const m = message.channel.send("Ping?");
-            m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
+            m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ping)}ms`);
             break;
         case "info":
             message.channel.sendMessage("I am a meme bot, created for fun by McPunho2 (Kyuubi#1669).");
