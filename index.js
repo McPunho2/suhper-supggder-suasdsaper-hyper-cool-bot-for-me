@@ -58,16 +58,27 @@ client.on("message", async message => {
      if(message.content.indexOf(PREFIX) !== 0) return;
 
     const args = message.content.slice(PREFIX.length).trim().split(/ +/g);
-
-    var moron= message.mentions.members.first();
-
+    
     switch (args[0].toLowerCase()) {
         case "kick":
-            moron.kick().then((member) => {
-                    message.channel.send(moron.displayName + "is and guy that was kicked by " + message.author.toString());
-            }).catch(() => {
-                message.channel.send("Ou nooo i can't do anythingo");
-            });
+            if(!message.member.roles.some(r=>["Administrator", "Owner/Creator/God", "Admin"].includes(r.name)) )
+                return message.reply("Sorry, you don't have permissions to use this!"); 
+            
+            let member = message.mentions.members.first();
+            if(!member)
+                return message.reply("Please mention a valid member of this server");
+            if(!member.bannable) 
+                return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
+            
+            let reason = args.slice(1).join(' ');
+            if(!reason)
+                return message.reply("Please indicate a reason for the ban!");
+            if(!member.bannable) 
+                return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
+            await member.ban(reason)
+              .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
+            message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
+            
             break;
         case "say":
         const sayMessage = args.join(" ");
@@ -75,11 +86,23 @@ client.on("message", async message => {
         message.channel.send(sayMessage);
         break;
         case "ban":
-            moron.ban().then((member) => {
-                message.channel.send(moron.displayName + " is an idiot and was banned by " + message.author.toString());
-            }).catch(() => {
-                message.channel.send("Acess denied sori.");
-            });
+            if(!message.member.roles.some(r=>["Administrator", "Owner/Creator/God", "Admin"].includes(r.name)) )
+               return message.reply("Sorry, you don't have permissions to use this!");
+    
+    let member = message.mentions.members.first();
+    if(!member)
+      return message.reply("Please mention a valid member of this server");
+    if(!member.bannable) 
+      return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
+
+    let reason = args.slice(1).join(' ');
+    if(!reason)
+      return message.reply("Please indicate a reason for the ban!");
+    
+    await member.ban(reason)
+      .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
+    message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
+  }
             break;
         case "noticeme":
             message.channel.sendMessage(message.author.toString() + " You were noticed by the god of memes, now get the fuck out.")
