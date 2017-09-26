@@ -49,6 +49,27 @@ bot.on("guildMemberAdd", function (member) {
     member.guild.defaultChannel.send("Welcome to " + member.guild.name + ", " + member.toString())
 });
 
+on.on("ready", () => {
+  // This event will run if the bot starts, and logs in, successfully.
+  console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`); 
+  // Example of changing the bot's playing game to something useful. `bot.user` is what the
+  // docs refer to as the "ClientUser".
+  bot.user.setGame(`on ${bot.guilds.size} servers`);
+});
+
+bot.on("guildCreate", guild => {
+  // This event triggers when the bot joins a guild.
+  console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
+  bot.user.setGame(`on ${bot.guilds.size} servers`);
+});
+
+bot.on("guildDelete", guild => {
+  // this event triggers when the bot is removed from a guild.
+  console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
+  bot.user.setGame(`on ${bot.guilds.size} servers`);
+});
+
+
 bot.on("message", async message => {
   // This event will run on every single message received, from any channel or DM.
   
@@ -149,19 +170,6 @@ bot.on("message", async message => {
     message.channel.bulkDelete(fetched)
       .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
   }
-  
-  if(command === "8ball") {
-      if (args[1]) message.channel.sendMessage(fortunes[Math.floor(Math.random() * fortunes.length)]);
-      else message.channel.sendMessage("I can't read that");
-  }
-  if(command === "info") {
-      message.channel.sendMessage("I am a meme bot, created for fun by McPunho2 (Kyuubi#1669).");
-  }
-  if(command === "noticeme") {
-      message.channel.sendMessage(message.author.toString() + " You were noticed by the god of memes, now get the fuck out.")
-  }
-  default:
-    message.channel.sendMessage("Invalid command, say **>cmds** for commands.");
 });
 
 bot.login(process.env.TOKEN);
