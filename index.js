@@ -7,6 +7,8 @@ function generateHex() {
     return "#" + Math.floor(Math.random() * 16777215).toString(16);
 }
 
+//holyshit\\
+
 function play(connection, message) {
     var server = servers[message.guild.id];
 
