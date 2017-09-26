@@ -84,7 +84,7 @@ bot.on("message", function (message) {
             message.channel.sendMessage(message.author.toString() + " You were noticed by the god of memes, now get the fuck out.")
             break;
         case "ping":
-            const m = await message.channel.send("Ping?");
+            const m = message.channel.send("Ping?");
             m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
             break;
         case "info":
