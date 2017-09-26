@@ -49,7 +49,7 @@ bot.on("guildMemberAdd", function (member) {
     member.guild.defaultChannel.send("Welcome to " + member.guild.name + ", " + member.toString())
 });
 
-client.on("message", async message => {
+bot.on("message", async message => {
   // This event will run on every single message received, from any channel or DM.
   
   // It's good practice to ignore other bots. This also makes your bot ignore itself
@@ -73,7 +73,7 @@ client.on("message", async message => {
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
     // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
     const m = await message.channel.send("Ping?");
-    m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
+    m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ping)}ms`);
   }
   
   if(command === "say") {
@@ -164,4 +164,4 @@ client.on("message", async message => {
     message.channel.sendMessage("Invalid command, say **>cmds** for commands.");
 });
 
-client.login(config.token);
+bot.login(process.env.TOKEN);
