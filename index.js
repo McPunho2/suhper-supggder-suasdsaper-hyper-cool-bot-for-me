@@ -84,7 +84,7 @@ bot.on("message", function (message) {
             message.channel.sendMessage(message.author.toString() + " You were noticed by the god of memes, now get the fuck out.")
             break;
         case "ping":
-            message.channel.sendMessage("Fuck you, i am not saying pong");
+            message.channel.sendMessage("Fuck you, i am not saying pong and Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms");
             break;
         case "info":
             message.channel.sendMessage("I am a meme bot, created for fun by McPunho2 (Kyuubi#1669).");
