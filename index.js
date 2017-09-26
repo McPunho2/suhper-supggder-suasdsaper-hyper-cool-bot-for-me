@@ -51,10 +51,11 @@ bot.on("guildMemberAdd", function (member) {
     member.guild.defaultChannel.send("Welcome to " + member.guild.name + " " + member.toString())
 });
 
-bot.on("message", function (message) {
-    if (message.author.equals(bot.user)) return;
-
-    if (!message.content.startsWith(PREFIX)) return;
+client.on("message", async message => {
+    
+    if(message.author.bot) return;
+    
+     if(message.content.indexOf(PREFIX) !== 0) return;
 
     const args = message.content.slice(PREFIX.length).trim().split(/ +/g);
 
@@ -84,7 +85,7 @@ bot.on("message", function (message) {
             message.channel.sendMessage(message.author.toString() + " You were noticed by the god of memes, now get the fuck out.")
             break;
         case "ping":
-            const m = message.channel.send("Ping?");
+            const await m = message.channel.send("Ping?");
             m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ping)}ms`);
             break;
         case "info":
