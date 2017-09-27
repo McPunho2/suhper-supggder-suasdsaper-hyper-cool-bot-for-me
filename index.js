@@ -51,7 +51,7 @@ bot.on("guildMemberAdd", function (member) {
     member.guild.defaultChannel.send("Welcome to " + member.guild.name + " " + member.toString())
 });
 
-bot.on("message", function (message) {
+bot.on('message', async (message) => {
     if (message.author.equals(bot.user)) return;
 
     if (!message.content.startsWith(PREFIX)) return;
